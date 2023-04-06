@@ -43,7 +43,7 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.2.5</version> <!-- ADCIONADO MANUALMENTE ESTA LINHA( A VERSAO ESTAVEL DO POSTGRESQL) -->
+			<version>42.2.5</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -63,6 +63,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
+			<plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+    			<artifactId>maven-resources-plugin</artifactId>
+    			<version>3.1.0</version>
 			</plugin>
 		</plugins>
 	</build>
