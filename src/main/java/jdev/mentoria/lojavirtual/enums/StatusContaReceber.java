@@ -20,8 +20,7 @@ public enum StatusContaReceber {
 	
 	@Override
 	public String toString() {
-	
-		return descricao;
+		return this.descricao;
 	}
 
 }

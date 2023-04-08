@@ -21,31 +21,30 @@ import javax.persistence.Table;
 public class NotaFiscalVenda implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_nota_fiscal_venda") // Info Padrao
 	private Long id;
-	
-	private String numero;
-	
-	private String serie;
-	
-	private String tipo;
-	
-	@Column(columnDefinition = "text")
-	private String xml;
-	
-	@Column(columnDefinition = "text")
-	private String pdf;
-	
-	
-	@OneToOne //Uma venda para uma Nota Fiscal
-	@JoinColumn(name = "venda_compra_loja_virt_id", nullable = false,
-	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virt_fk"))
-	private VendaCompraLojaVirtual vendaCompraLojaVirtual; 
 
-	
-	
+	@Column(nullable = false)
+	private String numero;
+
+	@Column(nullable = false)
+	private String serie;
+
+	@Column(nullable = false)
+	private String tipo;
+
+	@Column(columnDefinition = "text", nullable = false)
+	private String xml;
+
+	@Column(columnDefinition = "text", nullable = false)
+	private String pdf;
+
+	@OneToOne // Uma venda para uma Nota Fiscal
+	@JoinColumn(name = "venda_compra_loja_virt_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virt_fk"))
+	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
+
 	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
 		return vendaCompraLojaVirtual;
 	}
@@ -118,7 +117,5 @@ public class NotaFiscalVenda implements Serializable {
 		NotaFiscalVenda other = (NotaFiscalVenda) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
 }
