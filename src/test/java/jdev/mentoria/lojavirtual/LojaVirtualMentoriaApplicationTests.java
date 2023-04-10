@@ -6,9 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import jdev.mentoria.lojavirtual.controller.AcessoController;
 import jdev.mentoria.lojavirtual.model.Acesso;
+import junit.framework.TestCase;
 
 @SpringBootTest(classes = LojaVirtualMentoriaApplication.class)
-public class LojaVirtualMentoriaApplicationTests {
+public class LojaVirtualMentoriaApplicationTests extends TestCase {
 
 	@Autowired
 	private AcessoController acessoController;
@@ -18,7 +19,7 @@ public class LojaVirtualMentoriaApplicationTests {
 
 		Acesso acesso = new Acesso();
 		acesso.setDescricao("ROLE_ADMIN");
-		acessoController.salvarAcesso(acesso);
+		acesso = acessoController.salvarAcesso(acesso).getBody();
 	}
 
 }
