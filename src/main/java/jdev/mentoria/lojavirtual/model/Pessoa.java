@@ -21,38 +21,46 @@ import javax.persistence.SequenceGenerator;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @SequenceGenerator(name = "seq_pessoa", sequenceName = "seq_pessoa", initialValue = 1, allocationSize = 1)
 public abstract class Pessoa implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pessoa") // Info Padrao
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private String nome;
-	
+
 	@Column(nullable = false)
 	private String email;
-	
+
 	@Column(nullable = false)
 	private String telefone;
-	
-	//orphanRemoval = quando excluir, excluir tbm o endereço
-	//cascade = Fazer tudo em cascata
+
+	@Column
+	private String tipoPessoa;
+
+	// orphanRemoval = quando excluir, excluir tbm o endereço
+	// cascade = Fazer tudo em cascata
 	@OneToMany(mappedBy = "pessoa", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
-	
+
+	public void setTipoPessoa(String tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
+	}
+
+	public String getTipoPessoa() {
+		return tipoPessoa;
+	}
+
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-	
+
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 
-	
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -101,8 +109,5 @@ public abstract class Pessoa implements Serializable {
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
-	
-	
+
 }
