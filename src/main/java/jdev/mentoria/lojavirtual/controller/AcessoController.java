@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jdev.mentoria.lojavirtual.ExceptionMentoriaJava;
 import jdev.mentoria.lojavirtual.model.Acesso;
 import jdev.mentoria.lojavirtual.repository.AcessoRepository;
 import jdev.mentoria.lojavirtual.service.AcessoService;
@@ -28,11 +29,19 @@ public class AcessoController {
 	@Autowired
 	private AcessoService acessoService;
 
-	@ResponseBody /* Aqui serve para da retorno da API */
-	@PostMapping(value = "/salvarAcesso") /* Mapeando(Recebendo) a tela (url) para receber um json */
-	/* os dois ** serve para pegar o salvarAcesso de qualquer lugar */
-	public ResponseEntity<Acesso> salvarAcesso(
-			@RequestBody Acesso acesso) { /* @requestBody Recebe um json e converte para objeto */
+	@ResponseBody
+	@PostMapping(value = "/salvarAcesso")
+	public ResponseEntity<Acesso> salvarAcesso(@RequestBody Acesso acesso) throws ExceptionMentoriaJava {
+
+		if (acesso.getId() == null) {
+			
+			List<Acesso> acessos = acessoRepository.buscarAcessoDesc(acesso.getDescricao().toUpperCase());
+			
+			if (!acessos.isEmpty()) {
+				throw new ExceptionMentoriaJava("Ja existe acesso com a descrição: " + acesso.getDescricao());
+
+			}
+		}
 
 		Acesso acessoSalvo = acessoService.save(acesso);
 
@@ -58,25 +67,28 @@ public class AcessoController {
 
 		return new ResponseEntity<Object>("Acesso Removido", HttpStatus.OK);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/obterAcesso/{id}")
-	public ResponseEntity<Acesso> obterAcesso(@PathVariable("id") Long id) {
+	public ResponseEntity<Acesso> obterAcesso(@PathVariable("id") Long id) throws ExceptionMentoriaJava {
 
-		Acesso acesso = acessoRepository.findById(id).get();
+		Acesso acesso = acessoRepository.findById(id).orElse(null);
+
+		if (acesso == null) {
+			throw new ExceptionMentoriaJava("Não encontrou acesso com o código: " + id);
+
+		}
 
 		return new ResponseEntity<Acesso>(acesso, HttpStatus.OK);
 	}
-	
+
 	@ResponseBody
 	@GetMapping(value = "/buscarPorDesc/{desc}")
 	public ResponseEntity<List<Acesso>> buscarPorDesc(@PathVariable("desc") String desc) {
 
-		List<Acesso> acesso = acessoRepository.buscarAcessoDesc(desc);
+		List<Acesso> acesso = acessoRepository.buscarAcessoDesc(desc.toUpperCase());
 
 		return new ResponseEntity<List<Acesso>>(acesso, HttpStatus.OK);
 	}
-	
-	
 
 }

@@ -42,35 +42,15 @@ public class LojaVirtualMentoriaApplicationTests extends TestCase {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ResultActions retornoApi = mockMvc
-				.perform(MockMvcRequestBuilders.post("/salvarAcesso")
-				.content(objectMapper.writeValueAsString(acesso))
-				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON));
-		
-		System.out.println("Retorno da API"+ retornoApi.andReturn().getResponse().getContentAsString());
-		
-		
-		Acesso objetoRetorno = objectMapper
-				.readValue(retornoApi.andReturn().getResponse().getContentAsString(), Acesso.class);
+				.perform(MockMvcRequestBuilders.post("/salvarAcesso").content(objectMapper.writeValueAsString(acesso))
+						.accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON));
+
+		System.out.println("Retorno da API" + retornoApi.andReturn().getResponse().getContentAsString());
+
+		Acesso objetoRetorno = objectMapper.readValue(retornoApi.andReturn().getResponse().getContentAsString(),
+				Acesso.class);
 		assertEquals(acesso.getDescricao(), objetoRetorno.getDescricao());
-		
-		
-		
-		
-		
-		
-		
-		
-		
 
-	}
-
-	@Test
-	public void testCadastraAcesso() {
-
-		Acesso acesso = new Acesso();
-		acesso.setDescricao("ROLE_ADMIN");
-		acesso = acessoController.salvarAcesso(acesso).getBody();
 	}
 
 }
