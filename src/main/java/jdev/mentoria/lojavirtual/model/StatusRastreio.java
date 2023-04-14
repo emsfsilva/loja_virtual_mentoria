@@ -20,26 +20,42 @@ import javax.persistence.Table;
 public class StatusRastreio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_status_rastreio") // Info Padrao
 	private Long id;
-	
+
 	private String centroDistribuicao;
-	
+
 	private String cidade;
-	
+
 	private String estado;
-	
+
 	private String status;
-	
-	@ManyToOne //Uma venda para uma Nota Fiscal
-	@JoinColumn(name = "venda_compra_loja_virt_id", nullable = false,
-	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virt_fk"))
+
+	@ManyToOne // Uma venda para uma Nota Fiscal
+	@JoinColumn(name = "venda_compra_loja_virt_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "venda_compra_loja_virt_fk"))
 	private VendaCompraLojaVirtual vendaCompraLojaVirtual;
-	
-	
-	
+
+	@ManyToOne(targetEntity = Pessoa.class) // Muitas usuarios para uma empresa
+	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_id_fk"))
+	private Pessoa empresa;
+
+	public VendaCompraLojaVirtual getVendaCompraLojaVirtual() {
+		return vendaCompraLojaVirtual;
+	}
+
+	public void setVendaCompraLojaVirtual(VendaCompraLojaVirtual vendaCompraLojaVirtual) {
+		this.vendaCompraLojaVirtual = vendaCompraLojaVirtual;
+	}
+
+	public Pessoa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Pessoa empresa) {
+		this.empresa = empresa;
+	}
 
 	public Long getId() {
 		return id;
@@ -97,7 +113,5 @@ public class StatusRastreio implements Serializable {
 		StatusRastreio other = (StatusRastreio) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
 
 }
