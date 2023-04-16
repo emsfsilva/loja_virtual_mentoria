@@ -33,6 +33,10 @@ public class PessoaController {
 		if (pessoaJuridica.getId() == null && pessoaRepository.existeCnpjCadastrado(pessoaJuridica.getCnpj()) != null) {
 			throw new ExceptionMentoriaJava("Ja existe CNPJ cadastrado com o numero: " + pessoaJuridica.getCnpj());
 		}
+		
+		if (pessoaJuridica.getId() == null && pessoaRepository.existeInscEstadualCadastrado(pessoaJuridica.getInscEstadual()) != null) {
+			throw new ExceptionMentoriaJava("Ja existe Inscrição Estadusl cadastrado com o numero: " + pessoaJuridica.getInscEstadual());
+		}
 
 		/*
 		 * Esta linha envia tudo para o PessuaUserService e lá tem os metodos de salvar
