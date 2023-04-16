@@ -34,9 +34,9 @@ public class AcessoController {
 	public ResponseEntity<Acesso> salvarAcesso(@RequestBody Acesso acesso) throws ExceptionMentoriaJava {
 
 		if (acesso.getId() == null) {
-			
+
 			List<Acesso> acessos = acessoRepository.buscarAcessoDesc(acesso.getDescricao().toUpperCase());
-			
+
 			if (!acessos.isEmpty()) {
 				throw new ExceptionMentoriaJava("Ja existe acesso com a descrição: " + acesso.getDescricao());
 

@@ -13,10 +13,10 @@ import jdev.mentoria.lojavirtual.model.Usuario;
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> { //Long é o tipoda variavel ID do usuario
 	
 	//Metodo para consutlar um usuario
-	@Query("select u from Usuario u where u.login = ?1") //u é variavel e "login" é o atributo na classe Usuario
+	@Query(value = "select u from Usuario u where u.login = ?1") //u é variavel e "login" é o atributo na classe Usuario
 	Usuario findUserByLogin (String login);
 
-	@Query("select u from Usuario u where u.pessoa.id = ?1 or u.login = ?2")
+	@Query(value = "select u from Usuario u where u.pessoa.id = ?1 or u.login = ?2")
 	Usuario findUserByPessoa(Long id, String email);
 
 	@Query(value = "select constraint_name from information_schema.constraint_column_usage\r\n"
@@ -25,7 +25,7 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> { //Lon
 
 	@Transactional
 	@Modifying
-	@Query(value = "insert into usuarios_acesso(usuarios_id, acesso_id) values (?1, (select id from acesso where descricao = 'ROLE_USER'))", nativeQuery = true)
+	@Query(value = "insert into usuarios_acesso(usuario_id, acesso_id) values (?1, (select id from acesso where descricao = 'ROLE_USER'))", nativeQuery = true)
 	void insereAcessoUserPj(Long idUser);
 	
 

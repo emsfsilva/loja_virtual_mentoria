@@ -22,7 +22,9 @@ import jdev.mentoria.lojavirtual.model.Usuario;
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	
 	public JWTLoginFilter(String url, AuthenticationManager authenticationManager) {
+		
 		super(new AntPathRequestMatcher(url));
+		
 		setAuthenticationManager(authenticationManager);
 	
 	}
@@ -44,8 +46,8 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 		
 		try {
 			new JWTTokenAutenticacaoService().addAuthentication(response, authResult.getName());
-		} catch (Exception e) {
 			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

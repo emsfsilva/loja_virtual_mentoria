@@ -29,8 +29,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter implements H
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).disable().authorizeRequests()
-				.antMatchers("/").permitAll().antMatchers("/index").permitAll().antMatchers(HttpMethod.OPTIONS, "/**")
-				.permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
+				.antMatchers("/").permitAll().antMatchers("/index").permitAll().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated().and().logout().logoutSuccessUrl("/index")
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
 				.addFilterAfter(new JWTLoginFilter("/login", authenticationManager()),
 						UsernamePasswordAuthenticationFilter.class)

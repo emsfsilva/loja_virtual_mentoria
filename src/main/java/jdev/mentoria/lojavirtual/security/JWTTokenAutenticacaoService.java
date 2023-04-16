@@ -56,7 +56,7 @@ public class JWTTokenAutenticacaoService {
 	 * Metodo que retorna o usuario validado com o token ou caso nao seja valido
 	 * retorna null
 	 */
-	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response)
+	public Authentication getAuthetication(HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
 		String token = request.getHeader(HEADER_STRING);
@@ -67,14 +67,21 @@ public class JWTTokenAutenticacaoService {
 
 				String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
 
-				String user = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(tokenLimpo).getBody().getSubject();
+				String user = Jwts.parser().
+						setSigningKey(SECRET).
+						parseClaimsJws(tokenLimpo)
+						.getBody().getSubject();
 
 				if (user != null) {
-					Usuario usuario = ApplicationContextLoad.getApplicationContext().getBean(UsuarioRepository.class)
+					Usuario usuario = ApplicationContextLoad.
+							getApplicationContext().
+							getBean(UsuarioRepository.class)
 							.findUserByLogin(user);
 
 					if (usuario != null) {
-						return new UsernamePasswordAuthenticationToken(usuario.getLogin(), usuario.getSenha(),
+						return new UsernamePasswordAuthenticationToken(
+								usuario.getLogin(),
+								usuario.getSenha(),
 								usuario.getAuthorities());
 
 					}
