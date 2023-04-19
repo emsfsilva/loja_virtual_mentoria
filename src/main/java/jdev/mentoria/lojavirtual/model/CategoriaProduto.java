@@ -29,15 +29,17 @@ public class CategoriaProduto implements Serializable {
 	@Column(name = "nome_desc" , nullable = false) //Substituindo o nome da coluna no BD
 	private String nomeDesc;
 	
-	@ManyToOne(targetEntity = Pessoa.class) // Muitas usuarios para uma empresa
-	@JoinColumn(name = "empresa_id", nullable = false, foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_id_fk"))
-	private Pessoa empresa;
 	
-	public Pessoa getEmpresa() {
+	@ManyToOne(targetEntity = PessoaJuridica.class) // Muitas usuarios para uma empresa
+	@JoinColumn(name = "empresa_id", nullable = false,
+	foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT, name = "empresa_id_fk"))
+	private PessoaJuridica empresa = new PessoaJuridica();
+	
+	public PessoaJuridica getEmpresa() {
 		return empresa;
 	}
 
-	public void setEmpresa(Pessoa empresa) {
+	public void setEmpresa(PessoaJuridica empresa) {
 		this.empresa = empresa;
 	}
 
