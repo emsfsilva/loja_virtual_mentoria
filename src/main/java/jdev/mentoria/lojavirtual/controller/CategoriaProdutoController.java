@@ -39,10 +39,15 @@ public class CategoriaProdutoController {
 	/* os dois ** serve para pegar o salvarAcesso de qualquer lugar */
 	public ResponseEntity<?> deleteCategoria(
 			@RequestBody CategoriaProduto categoriaProduto) { /* @requestBody Recebe um json e converte para objeto */
+		
+		if(categoriaProdutoRepository.findById(categoriaProduto.getId()).isPresent() == false) {
+			return new ResponseEntity("Categoria já foi Removida", HttpStatus.OK);
+			
+		}
 
 		categoriaProdutoRepository.deleteById(categoriaProduto.getId());
 
-		return new ResponseEntity<Object>("Categoria Removida", HttpStatus.OK);
+		return new ResponseEntity("Categoria Removida", HttpStatus.OK);
 	}
 	
 	

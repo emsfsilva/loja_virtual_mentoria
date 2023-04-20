@@ -49,7 +49,7 @@ public class AcessoController {
 	}
 
 	@ResponseBody /* Aqui serve para da retorno da API */
-	@PostMapping(value = "/deleteAcesso") /* Mapeando(Recebendo) a tela (url) para receber um json */
+	@PostMapping(value = "**/deleteAcesso") /* Mapeando(Recebendo) a tela (url) para receber um json */
 	/* os dois ** serve para pegar o salvarAcesso de qualquer lugar */
 	public ResponseEntity<?> deleteAcesso(
 			@RequestBody Acesso acesso) { /* @requestBody Recebe um json e converte para objeto */
@@ -60,7 +60,7 @@ public class AcessoController {
 	}
 
 	@ResponseBody
-	@DeleteMapping(value = "/deleteAcessoPorId/{id}")
+	@DeleteMapping(value = "**/deleteAcessoPorId/{id}")
 	public ResponseEntity<?> deleteAcessoPorId(@PathVariable("id") Long id) {
 
 		acessoRepository.deleteById(id);
@@ -69,7 +69,7 @@ public class AcessoController {
 	}
 
 	@ResponseBody
-	@GetMapping(value = "/obterAcesso/{id}")
+	@GetMapping(value = "**/obterAcesso/{id}")
 	public ResponseEntity<Acesso> obterAcesso(@PathVariable("id") Long id) throws ExceptionMentoriaJava {
 
 		Acesso acesso = acessoRepository.findById(id).orElse(null);
@@ -83,7 +83,7 @@ public class AcessoController {
 	}
 
 	@ResponseBody
-	@GetMapping(value = "/buscarPorDesc/{desc}")
+	@GetMapping(value = "**/buscarPorDesc/{desc}")
 	public ResponseEntity<List<Acesso>> buscarPorDesc(@PathVariable("desc") String desc) {
 
 		List<Acesso> acesso = acessoRepository.buscarAcessoDesc(desc.toUpperCase());
